@@ -1,18 +1,17 @@
+import React from 'react';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import puppeteer from 'puppeteer';
-import { generateResumeHtml } from '@/lib/pdf/resume-html-template';
+import { renderToBuffer } from '@react-pdf/renderer';
+import { ResumeDocument } from '@/lib/pdf/resume-template';
 
-// Force Node.js runtime (required for Puppeteer)
+// Force Node.js runtime (required for @react-pdf/renderer)
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60; // 60 seconds timeout for PDF generation
 
 export async function GET(request: NextRequest) {
-  let browser = null;
-
   try {
-    console.log('PDF generation started (Puppeteer)');
+    console.log('PDF generation started (@react-pdf/renderer)');
     const supabase = await createClient();
 
     const { data: { user }, error: authError } = await supabase.auth.getUser();
@@ -68,52 +67,15 @@ export async function GET(request: NextRequest) {
     }
     console.log('Skills found:', skills?.length || 0);
 
-    // Generate HTML
-    console.log('Generating HTML...');
-    const html = generateResumeHtml({
-      resume,
-      workHistories: workHistories || [],
-      skills: skills || [],
-    });
-
-    // Launch Puppeteer
-    console.log('Launching Puppeteer...');
-    browser = await puppeteer.launch({
-      headless: true,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-gpu',
-        '--font-render-hinting=none',
-      ],
-    });
-
-    const page = await browser.newPage();
-
-    // Set content and wait for fonts to load
-    await page.setContent(html, {
-      waitUntil: ['networkidle0', 'domcontentloaded'],
-    });
-
-    // Wait a bit for fonts to fully render
-    await page.evaluateHandle('document.fonts.ready');
-
-    console.log('Generating PDF...');
-    const pdfBuffer = await page.pdf({
-      format: 'A4',
-      printBackground: true,
-      margin: {
-        top: '15mm',
-        right: '15mm',
-        bottom: '15mm',
-        left: '15mm',
-      },
-      preferCSSPageSize: true,
-    });
-
-    await browser.close();
-    browser = null;
+    // Generate PDF using @react-pdf/renderer
+    console.log('Generating PDF with @react-pdf/renderer...');
+    const pdfBuffer = await renderToBuffer(
+      <ResumeDocument
+        resume={resume}
+        workHistories={workHistories || []}
+        skills={skills || []}
+      />
+    );
 
     console.log('PDF generated, size:', pdfBuffer.length);
 
@@ -121,7 +83,7 @@ export async function GET(request: NextRequest) {
     const fileName = resume.full_name || 'resume';
     const encodedFileName = encodeURIComponent(fileName);
 
-    return new NextResponse(Buffer.from(pdfBuffer), {
+    return new NextResponse(pdfBuffer, {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="resume.pdf"; filename*=UTF-8''${encodedFileName}.pdf`,
@@ -130,15 +92,6 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('PDF generation error:', error);
     console.error('Error stack:', error instanceof Error ? error.stack : 'No stack');
-
-    // Make sure to close browser on error
-    if (browser) {
-      try {
-        await browser.close();
-      } catch (closeError) {
-        console.error('Error closing browser:', closeError);
-      }
-    }
 
     return NextResponse.json(
       {
