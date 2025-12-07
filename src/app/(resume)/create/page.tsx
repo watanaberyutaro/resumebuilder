@@ -814,7 +814,7 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
   // Loading state
   if (initialMode === 'loading') {
     return (
-      <div className="h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="flex flex-col items-center gap-3">
           <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
           <p className="text-gray-600">読み込み中...</p>
@@ -826,14 +826,14 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
   // Choice dialog for completed session with preview
   if (initialMode === 'choice') {
     return (
-      <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
+      <div className="min-h-screen bg-gray-50 flex flex-col">
         {/* Header */}
         <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-          <div className="px-4 h-14 flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <div className="px-3 md:px-4 h-14 flex items-center justify-between">
+            <div className="flex items-center gap-2 md:gap-3">
               <Link
                 href="/dashboard"
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-colors"
               >
                 <ArrowLeft className="w-5 h-5 text-gray-600" />
               </Link>
@@ -853,13 +853,14 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
                   size="sm"
                   onClick={handleDownloadPDF}
                   disabled={isDownloading}
+                  className="text-xs md:text-sm"
                 >
                   {isDownloading ? (
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    <Loader2 className="w-4 h-4 md:mr-2 animate-spin" />
                   ) : (
-                    <Download className="w-4 h-4 mr-2" />
+                    <Download className="w-4 h-4 md:mr-2" />
                   )}
-                  {isDownloading ? 'PDF生成中...' : 'PDF出力'}
+                  <span className="hidden md:inline">{isDownloading ? 'PDF生成中...' : 'PDF出力'}</span>
                 </Button>
               )}
             </div>
@@ -867,26 +868,38 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
         </header>
 
         {/* Main Content */}
-        <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
           {/* Action Panel */}
-          <div className="w-full lg:w-96 flex flex-col bg-white border-r border-gray-200 p-6 overflow-y-auto">
+          <div className={`w-full lg:w-96 flex flex-col bg-white lg:border-r border-gray-200 p-4 md:p-6 ${showPreview ? 'hidden lg:flex' : 'flex'}`}>
             <div className="mb-6">
-              <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                <CheckCircle className="w-7 h-7 text-green-600" />
+              <div className="w-12 h-12 md:w-14 md:h-14 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <CheckCircle className="w-6 h-6 md:w-7 md:h-7 text-green-600" />
               </div>
-              <h2 className="text-xl font-bold text-gray-900 mb-2">
+              <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
                 履歴書が完成しています
               </h2>
               <p className="text-gray-600 text-sm">
-                右側のプレビューで内容を確認できます。<br />
+                <span className="hidden lg:inline">右側のプレビューで内容を確認できます。</span>
+                <span className="lg:hidden">プレビューで内容を確認できます。</span>
+                <br />
                 編集が必要な場合は下のボタンから操作してください。
               </p>
             </div>
 
             <div className="space-y-3 flex-1">
+              {/* Mobile: Show preview first */}
+              <Button
+                variant="outline"
+                className="w-full h-12 md:h-14 text-base lg:hidden"
+                onClick={() => setShowPreview(true)}
+              >
+                <FileText className="w-5 h-5 mr-3" />
+                プレビューを見る
+              </Button>
+
               <Button
                 onClick={handleEdit}
-                className="w-full h-14 text-base"
+                className="w-full h-12 md:h-14 text-base"
                 variant="default"
               >
                 <Edit className="w-5 h-5 mr-3" />
@@ -896,7 +909,7 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
               <Button
                 onClick={handleRestart}
                 disabled={isRestarting}
-                className="w-full h-14 text-base"
+                className="w-full h-12 md:h-14 text-base"
                 variant="outline"
               >
                 {isRestarting ? (
@@ -907,24 +920,27 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
                 最初から作り直す
               </Button>
             </div>
-
-            {/* Mobile: Show preview toggle */}
-            <div className="lg:hidden mt-6 pt-4 border-t">
-              <Button
-                variant="outline"
-                className="w-full"
-                onClick={() => setShowPreview(!showPreview)}
-              >
-                {showPreview ? 'アクションに戻る' : 'プレビューを見る'}
-              </Button>
-            </div>
           </div>
 
           {/* Resume Preview Panel */}
-          <div className={`flex-1 overflow-y-auto bg-gray-100 p-6 ${showPreview ? 'block' : 'hidden lg:block'}`}>
-            <div className="max-w-[595px] mx-auto">
-              <h3 className="text-sm font-medium text-gray-600 mb-3">プレビュー</h3>
-              <ResumePreview data={resumeData} />
+          <div className={`flex-1 overflow-y-auto bg-gray-100 ${showPreview ? 'block' : 'hidden lg:block'}`}>
+            {/* Mobile back button */}
+            <div className="lg:hidden sticky top-0 bg-gray-100 p-3 border-b border-gray-200 z-10">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowPreview(false)}
+                className="text-gray-600"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                戻る
+              </Button>
+            </div>
+            <div className="p-4 md:p-6">
+              <div className="max-w-[595px] mx-auto">
+                <h3 className="text-sm font-medium text-gray-600 mb-3">プレビュー</h3>
+                <ResumePreview data={resumeData} />
+              </div>
             </div>
           </div>
         </div>
@@ -934,26 +950,26 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
 
   // Chat view
   return (
-    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="px-4 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="px-3 md:px-4 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-2 md:gap-3">
             <Link
               href="/dashboard"
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-colors"
             >
               <ArrowLeft className="w-5 h-5 text-gray-600" />
             </Link>
             <div className="flex items-center gap-2">
               <FileText className="w-5 h-5 text-blue-600" />
-              <span className="font-semibold text-gray-900">履歴書</span>
+              <span className="font-semibold text-gray-900 text-sm md:text-base">履歴書</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            {/* Step indicator */}
-            <div className="hidden sm:flex items-center gap-1 bg-gray-100 rounded-full px-3 py-1">
+          <div className="flex items-center gap-2 md:gap-3">
+            {/* Step indicator - simplified for mobile */}
+            <div className="flex items-center gap-1 bg-gray-100 rounded-full px-2 md:px-3 py-1">
               {(['education', 'work', 'skills', 'pr'] as Step[]).map((step, i) => (
                 <div key={step} className="flex items-center">
                   <div
@@ -962,11 +978,11 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
                       ['education', 'work', 'skills', 'pr'].indexOf(currentStep) > i ? 'bg-green-500' : 'bg-gray-300'
                     }`}
                   />
-                  {i < 3 && <div className="w-4 h-px bg-gray-300 mx-1" />}
+                  {i < 3 && <div className="w-2 md:w-4 h-px bg-gray-300 mx-0.5 md:mx-1" />}
                 </div>
               ))}
             </div>
-            <span className="text-sm text-gray-500 hidden sm:block">
+            <span className="text-xs md:text-sm text-gray-500 hidden sm:block">
               {STEP_LABELS[currentStep]}
             </span>
 
@@ -975,7 +991,7 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
               variant="outline"
               size="sm"
               onClick={() => setShowPreview(!showPreview)}
-              className="lg:hidden"
+              className="lg:hidden text-xs px-2 md:px-3"
             >
               {showPreview ? 'チャット' : 'プレビュー'}
             </Button>
@@ -985,13 +1001,14 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
                 size="sm"
                 onClick={handleDownloadPDF}
                 disabled={isDownloading}
+                className="text-xs md:text-sm px-2 md:px-3"
               >
                 {isDownloading ? (
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  <Loader2 className="w-4 h-4 md:mr-2 animate-spin" />
                 ) : (
-                  <Download className="w-4 h-4 mr-2" />
+                  <Download className="w-4 h-4 md:mr-2" />
                 )}
-                {isDownloading ? 'PDF生成中...' : 'PDF出力'}
+                <span className="hidden md:inline">{isDownloading ? 'PDF生成中...' : 'PDF出力'}</span>
               </Button>
             )}
 
@@ -1001,7 +1018,7 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
               size="sm"
               onClick={handleRestart}
               disabled={isRestarting}
-              className="text-gray-500 hover:text-gray-700"
+              className="text-gray-500 hover:text-gray-700 px-2"
             >
               {isRestarting ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -1015,19 +1032,19 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
       </header>
 
       {/* Main Content - Split View */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Chat Panel */}
         <div className={`flex-1 flex flex-col bg-white ${showPreview ? 'hidden lg:flex' : 'flex'} lg:border-r border-gray-200`}>
           {/* Messages */}
           <div className="flex-1 overflow-y-auto">
-            <div className="max-w-2xl mx-auto px-4 py-6 space-y-4">
+            <div className="max-w-2xl mx-auto px-3 md:px-4 py-4 md:py-6 space-y-3 md:space-y-4">
               {messages.map((message) => (
                 <div
                   key={message.id}
                   className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-3 ${
+                    className={`max-w-[90%] md:max-w-[85%] rounded-2xl px-3 md:px-4 py-2.5 md:py-3 ${
                       message.role === 'user'
                         ? 'bg-blue-600 text-white'
                         : 'bg-gray-100 text-gray-900'
@@ -1041,7 +1058,7 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-gray-100 rounded-2xl px-4 py-3">
+                  <div className="bg-gray-100 rounded-2xl px-3 md:px-4 py-2.5 md:py-3">
                     <div className="flex items-center gap-2">
                       <Loader2 className="w-4 h-4 animate-spin text-gray-500" />
                       <span className="text-sm text-gray-500">考え中...</span>
@@ -1054,9 +1071,9 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
           </div>
 
           {/* Input */}
-          <div className="border-t border-gray-200 bg-white p-4">
+          <div className="border-t border-gray-200 bg-white p-3 md:p-4 safe-area-bottom">
             <div className="max-w-2xl mx-auto">
-              <div className="flex gap-3">
+              <div className="flex gap-2 md:gap-3">
                 <div className="flex-1 relative">
                   <textarea
                     ref={inputRef}
@@ -1066,19 +1083,19 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
                     placeholder={currentStep === 'complete' ? '修正があればお知らせください...' : 'メッセージを入力...'}
                     disabled={isLoading}
                     rows={1}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500"
-                    style={{ minHeight: '48px', maxHeight: '120px' }}
+                    className="w-full px-3 md:px-4 py-3 border border-gray-300 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500 text-base"
+                    style={{ minHeight: '48px', maxHeight: '120px', fontSize: '16px' }}
                   />
                 </div>
                 <Button
                   onClick={sendMessage}
                   disabled={isLoading || !input.trim()}
-                  className="h-12 w-12 rounded-xl"
+                  className="h-12 w-12 rounded-xl flex-shrink-0"
                 >
                   <Send className="w-5 h-5" />
                 </Button>
               </div>
-              <p className="text-xs text-gray-400 mt-2 text-center">
+              <p className="text-xs text-gray-400 mt-2 text-center hidden md:block">
                 {currentStep === 'complete'
                   ? '修正したい箇所があればメッセージを送信してください'
                   : 'Enterで送信 / 「次へ」と入力して次のステップに進む'}
@@ -1089,7 +1106,19 @@ ${resumeData.selfPR ? '✓ 自己PR' : ''}
 
         {/* Resume Preview Panel */}
         <div className={`w-full lg:w-1/2 xl:w-2/5 overflow-y-auto bg-gray-100 ${showPreview ? 'block' : 'hidden lg:block'}`}>
-          <div className="p-4 lg:p-6">
+          {/* Mobile back button */}
+          <div className="lg:hidden sticky top-0 bg-gray-100 p-3 border-b border-gray-200 z-10">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowPreview(false)}
+              className="text-gray-600"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              チャットに戻る
+            </Button>
+          </div>
+          <div className="p-3 md:p-4 lg:p-6">
             <div className="max-w-[595px] mx-auto">
               <h3 className="text-sm font-medium text-gray-600 mb-3">プレビュー</h3>
               <ResumePreview data={resumeData} />

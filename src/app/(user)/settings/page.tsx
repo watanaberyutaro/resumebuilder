@@ -296,10 +296,10 @@ export default function SettingsPage() {
 
   if (isLoading) {
     return (
-      <div className="h-full flex flex-col overflow-hidden">
-        <div className="p-6 border-b bg-white flex-shrink-0">
-          <h1 className="text-2xl font-bold text-gray-900">設定</h1>
-          <p className="text-gray-600 mt-1">基本情報を編集</p>
+      <div className="min-h-screen flex flex-col">
+        <div className="p-4 md:p-6 border-b bg-white flex-shrink-0">
+          <h1 className="text-xl md:text-2xl font-bold text-gray-900">設定</h1>
+          <p className="text-gray-600 text-sm md:text-base mt-1">基本情報を編集</p>
         </div>
         <div className="flex-1 flex items-center justify-center">
           <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
@@ -309,27 +309,27 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="h-full flex flex-col overflow-hidden">
-      <div className="p-6 border-b bg-white flex-shrink-0">
-        <h1 className="text-2xl font-bold text-gray-900">設定</h1>
-        <p className="text-gray-600 mt-1">基本情報を編集</p>
+    <div className="min-h-screen flex flex-col">
+      <div className="p-4 md:p-6 border-b bg-white flex-shrink-0">
+        <h1 className="text-xl md:text-2xl font-bold text-gray-900">設定</h1>
+        <p className="text-gray-600 text-sm md:text-base mt-1">基本情報を編集</p>
       </div>
 
-      <div className="flex-1 overflow-auto p-6">
-        <div className="max-w-2xl mx-auto space-y-6">
+      <div className="flex-1 overflow-auto p-4 md:p-6">
+        <div className="max-w-2xl mx-auto space-y-4 md:space-y-6">
           {/* Photo Card */}
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+            <CardHeader className="p-4 md:p-6">
+              <CardTitle className="flex items-center gap-2 text-base md:text-lg">
                 <Camera className="w-5 h-5" />
                 証明写真
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-sm">
                 履歴書に使用する証明写真を設定してください
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="flex items-start gap-6">
+            <CardContent className="p-4 md:p-6 pt-0">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 md:gap-6">
                 {/* Photo Preview */}
                 <div className="relative w-[90px] h-[120px] bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0">
                   {(photoProcessedUrl || photoUrl) ? (
@@ -342,7 +342,7 @@ export default function SettingsPage() {
                       />
                       <button
                         onClick={handleRemovePhoto}
-                        className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                        className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 active:bg-red-700 transition-colors"
                       >
                         <X className="h-3 w-3" />
                       </button>
@@ -366,7 +366,7 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Actions */}
-                <div className="flex-1 space-y-3">
+                <div className="flex-1 space-y-3 w-full sm:w-auto">
                   <input
                     ref={fileInputRef}
                     type="file"
@@ -381,7 +381,7 @@ export default function SettingsPage() {
                     size="sm"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isUploadingPhoto}
-                    className="w-full"
+                    className="w-full h-11 md:h-10"
                   >
                     <Upload className="h-4 w-4 mr-2" />
                     写真をアップロード
@@ -393,17 +393,17 @@ export default function SettingsPage() {
                       variant="outline"
                       size="sm"
                       onClick={() => setShowIDPhotoModal(true)}
-                      className="w-full border-blue-200 text-blue-600 hover:bg-blue-50"
+                      className="w-full h-11 md:h-10 border-blue-200 text-blue-600 hover:bg-blue-50 active:bg-blue-100"
                     >
                       <Sparkles className="h-4 w-4 mr-2" />
                       AIで証明写真を作成
                     </Button>
                   )}
 
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500 text-center sm:text-left">
                     JPEG、PNG形式（5MB以下）
                   </p>
-                  <p className="text-xs text-blue-600">
+                  <p className="text-xs text-blue-600 text-center sm:text-left">
                     AIが背景を水色に変更し、スーツを合成します
                   </p>
                 </div>
@@ -413,17 +413,17 @@ export default function SettingsPage() {
 
           {/* Basic Info Card */}
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+            <CardHeader className="p-4 md:p-6">
+              <CardTitle className="flex items-center gap-2 text-base md:text-lg">
                 <User className="w-5 h-5" />
                 基本情報
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-sm">
                 履歴書に使用される基本情報を入力してください
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+            <CardContent className="p-4 md:p-6 pt-0 space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     氏名
@@ -432,6 +432,7 @@ export default function SettingsPage() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="山田 太郎"
+                    className="h-11 md:h-10 text-base"
                   />
                 </div>
                 <div>
@@ -442,11 +443,12 @@ export default function SettingsPage() {
                     value={fullNameKana}
                     onChange={(e) => setFullNameKana(e.target.value)}
                     placeholder="ヤマダ タロウ"
+                    className="h-11 md:h-10 text-base"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     <Calendar className="w-4 h-4 inline mr-1" />
@@ -456,6 +458,7 @@ export default function SettingsPage() {
                     type="date"
                     value={birthDate}
                     onChange={(e) => setBirthDate(e.target.value)}
+                    className="h-11 md:h-10 text-base"
                   />
                 </div>
                 <div>
@@ -465,7 +468,7 @@ export default function SettingsPage() {
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full h-11 md:h-10 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
                   >
                     <option value="">選択してください</option>
                     <option value="male">男性</option>
@@ -480,14 +483,14 @@ export default function SettingsPage() {
 
           {/* Address Card */}
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+            <CardHeader className="p-4 md:p-6">
+              <CardTitle className="flex items-center gap-2 text-base md:text-lg">
                 <MapPin className="w-5 h-5" />
                 住所
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-3 gap-4">
+            <CardContent className="p-4 md:p-6 pt-0 space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     郵便番号
@@ -496,9 +499,10 @@ export default function SettingsPage() {
                     value={postalCode}
                     onChange={(e) => handlePostalCodeChange(e.target.value)}
                     placeholder="123-4567"
+                    className="h-11 md:h-10 text-base"
                   />
                 </div>
-                <div className="col-span-2">
+                <div className="sm:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     住所
                   </label>
@@ -506,6 +510,7 @@ export default function SettingsPage() {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     placeholder="東京都渋谷区..."
+                    className="h-11 md:h-10 text-base"
                   />
                 </div>
               </div>
@@ -514,13 +519,13 @@ export default function SettingsPage() {
 
           {/* Contact Card */}
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+            <CardHeader className="p-4 md:p-6">
+              <CardTitle className="flex items-center gap-2 text-base md:text-lg">
                 <Phone className="w-5 h-5" />
                 連絡先
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="p-4 md:p-6 pt-0 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   <Phone className="w-4 h-4 inline mr-1" />
@@ -531,6 +536,7 @@ export default function SettingsPage() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="090-1234-5678"
+                  className="h-11 md:h-10 text-base"
                 />
               </div>
               <div>
@@ -543,14 +549,15 @@ export default function SettingsPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="example@email.com"
+                  className="h-11 md:h-10 text-base"
                 />
               </div>
             </CardContent>
           </Card>
 
-          {/* Save Button */}
-          <div className="flex justify-end">
-            <Button onClick={handleSave} isLoading={isSaving} className="gap-2">
+          {/* Save Button - Sticky on mobile */}
+          <div className="sticky bottom-0 bg-gray-50 -mx-4 md:mx-0 px-4 md:px-0 py-4 md:py-0 md:bg-transparent border-t md:border-0 border-gray-200">
+            <Button onClick={handleSave} isLoading={isSaving} className="w-full md:w-auto gap-2 h-12 md:h-10">
               <Save className="w-4 h-4" />
               保存する
             </Button>
@@ -563,6 +570,9 @@ export default function SettingsPage() {
               履歴書作成ページで詳細な職歴やスキルを追加できます。
             </p>
           </div>
+
+          {/* Bottom spacing for mobile */}
+          <div className="h-4 md:h-0" />
         </div>
       </div>
 

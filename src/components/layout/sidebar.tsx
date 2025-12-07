@@ -12,6 +12,8 @@ import {
   LogOut,
   ChevronRight,
   Shield,
+  Menu,
+  X,
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
@@ -33,7 +35,12 @@ const subNavItems: NavItem[] = [
   { href: '/settings', label: '設定', icon: Settings },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [isAdmin, setIsAdmin] = useState(false);
@@ -73,29 +80,45 @@ export function Sidebar() {
     return pathname.startsWith(href);
   };
 
-  return (
-    <aside className="w-64 bg-white border-r border-gray-200 flex flex-col h-screen sticky top-0">
+  const handleLinkClick = () => {
+    // Close sidebar on mobile after navigation
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  const sidebarContent = (
+    <>
       {/* Logo */}
-      <div className="p-6 border-b border-gray-200">
-        <Link href="/dashboard" className="flex items-center gap-2">
+      <div className="p-4 md:p-6 border-b border-gray-200 flex items-center justify-between">
+        <Link href="/dashboard" className="flex items-center gap-2" onClick={handleLinkClick}>
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
             <FileText className="w-5 h-5 text-white" />
           </div>
           <span className="font-bold text-gray-900">AI履歴書</span>
         </Link>
+        {/* Close button for mobile */}
+        <button
+          onClick={onClose}
+          className="md:hidden p-2 -mr-2 text-gray-500 hover:text-gray-700"
+          aria-label="メニューを閉じる"
+        >
+          <X className="w-6 h-6" />
+        </button>
       </div>
 
       {/* Main Navigation */}
-      <nav className="flex-1 p-4">
+      <nav className="flex-1 p-4 overflow-y-auto">
         <div className="space-y-1">
           {mainNavItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
+              onClick={handleLinkClick}
+              className={`flex items-center gap-3 px-3 py-3 md:py-2.5 rounded-lg transition-colors ${
                 isActive(item.href)
                   ? 'bg-blue-50 text-blue-700'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 active:bg-gray-100'
               }`}
             >
               <item.icon className={`w-5 h-5 ${isActive(item.href) ? 'text-blue-600' : ''}`} />
@@ -116,10 +139,11 @@ export function Sidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
+                onClick={handleLinkClick}
+                className={`flex items-center gap-3 px-3 py-3 md:py-2.5 rounded-lg transition-colors ${
                   isActive(item.href)
                     ? 'bg-blue-50 text-blue-700'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 active:bg-gray-100'
                 }`}
               >
                 <item.icon className={`w-5 h-5 ${isActive(item.href) ? 'text-blue-600' : ''}`} />
@@ -143,7 +167,8 @@ export function Sidebar() {
             <div className="space-y-1">
               <Link
                 href="/admin"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                onClick={handleLinkClick}
+                className="flex items-center gap-3 px-3 py-3 md:py-2.5 rounded-lg transition-colors text-gray-600 hover:bg-gray-50 hover:text-gray-900 active:bg-gray-100"
               >
                 <Shield className="w-5 h-5" />
                 <span className="font-medium">管理パネル</span>
@@ -170,12 +195,60 @@ export function Sidebar() {
         </div>
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-colors"
+          className="w-full flex items-center gap-3 px-3 py-3 md:py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 active:bg-gray-100 rounded-lg transition-colors"
         >
           <LogOut className="w-5 h-5" />
           <span className="font-medium">ログアウト</span>
         </button>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Desktop Sidebar */}
+      <aside className="hidden md:flex w-64 bg-white border-r border-gray-200 flex-col h-screen sticky top-0">
+        {sidebarContent}
+      </aside>
+
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={onClose}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Mobile Drawer */}
+      <aside
+        className={`md:hidden fixed inset-y-0 left-0 w-72 bg-white z-50 flex flex-col transform transition-transform duration-300 ease-in-out ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        {sidebarContent}
+      </aside>
+    </>
+  );
+}
+
+// Mobile Header Component
+export function MobileHeader({ onMenuClick }: { onMenuClick: () => void }) {
+  return (
+    <header className="md:hidden bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between sticky top-0 z-30">
+      <Link href="/dashboard" className="flex items-center gap-2">
+        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+          <FileText className="w-5 h-5 text-white" />
+        </div>
+        <span className="font-bold text-gray-900">AI履歴書</span>
+      </Link>
+      <button
+        onClick={onMenuClick}
+        className="p-2 -mr-2 text-gray-600 hover:text-gray-900"
+        aria-label="メニューを開く"
+      >
+        <Menu className="w-6 h-6" />
+      </button>
+    </header>
   );
 }

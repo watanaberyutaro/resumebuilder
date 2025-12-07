@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { Toaster } from '@/components/ui/toast';
-import { Sidebar } from '@/components/layout/sidebar';
+import { UserLayoutClient } from '@/components/layout/user-layout-client';
 
 export default async function ResumeLayout({
   children,
@@ -16,12 +16,9 @@ export default async function ResumeLayout({
   }
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
-      <Sidebar />
-      <main className="flex-1 overflow-hidden">
-        {children}
-      </main>
+    <>
+      <UserLayoutClient>{children}</UserLayoutClient>
       <Toaster />
-    </div>
+    </>
   );
 }
