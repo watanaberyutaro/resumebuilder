@@ -2,7 +2,7 @@ import React from 'react';
 import fs from 'fs';
 import path from 'path';
 import { Document, Page, Text, View, StyleSheet, Font, Image } from '@react-pdf/renderer';
-import type { Resume, WorkHistory, Skill } from '@/types/database';
+import type { Resume, WorkHistory, Skill, Education } from '@/types/database';
 
 // Register IPAex Gothic font for Japanese support using Buffer
 const fontPath = path.join(process.cwd(), 'public', 'fonts', 'ipaexg.ttf');
@@ -502,7 +502,7 @@ export function ResumeDocument({ resume, workHistories, skills }: ResumeDocument
               <Text style={styles.historySubTitle}>学歴</Text>
             </View>
             {education.length > 0 ? (
-              education.map((edu: { school_name?: string; faculty?: string; start_date?: string; end_date?: string }, index: number) => (
+              education.map((edu: Education, index: number) => (
                 <React.Fragment key={`edu-${index}`}>
                   <View style={styles.historyRow}>
                     <View style={styles.historyDateCell}>
