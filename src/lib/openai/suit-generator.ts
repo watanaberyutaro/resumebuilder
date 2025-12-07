@@ -52,7 +52,7 @@ export class SuitGenerator {
         style: 'natural',
       });
 
-      const imageUrl = response.data[0]?.url;
+      const imageUrl = response.data?.[0]?.url;
       if (!imageUrl) {
         return { success: false, error: 'No image URL in response' };
       }
