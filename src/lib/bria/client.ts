@@ -124,6 +124,7 @@ export class BriaClient {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), this.timeout);
 
+      // Bria API accepts either URL or raw base64 string (without data URI prefix)
       const response = await fetch(`${this.baseUrl}/image/edit/remove_background`, {
         method: 'POST',
         headers: {
@@ -131,7 +132,7 @@ export class BriaClient {
           'api_token': this.apiKey,
         },
         body: JSON.stringify({
-          image: `data:image/jpeg;base64,${base64Image}`,
+          image: base64Image,
         }),
         signal: controller.signal,
       });
