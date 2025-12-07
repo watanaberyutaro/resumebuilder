@@ -310,10 +310,11 @@ export function ResumeDocument({ resume, workHistories, skills }: ResumeDocument
               {workHistories.map((wh, index) => (
                 <View
                   key={index}
-                  style={[
-                    styles.workItem,
-                    index === workHistories.length - 1 ? styles.workItemLast : undefined
-                  ]}
+                  style={
+                    index === workHistories.length - 1
+                      ? [styles.workItem, styles.workItemLast]
+                      : styles.workItem
+                  }
                 >
                   <Text style={styles.companyName}>{wh.company_name}</Text>
                   <Text style={styles.positionPeriod}>
