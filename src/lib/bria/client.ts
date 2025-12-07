@@ -64,10 +64,10 @@ export class BriaClient {
         if (status === 'completed' || status === 'success') {
           // Try multiple possible result URL locations
           const resultUrl =
-            data.result?.image_url ||
+            (typeof data.result === 'object' && data.result !== null ? data.result.image_url : undefined) ||
             data.result_url ||
-            data.result?.url ||
-            data.result ||
+            (typeof data.result === 'object' && data.result !== null ? data.result.url : undefined) ||
+            (typeof data.result === 'string' ? data.result : undefined) ||
             data.url ||
             data.output_url ||
             data.image_url;
