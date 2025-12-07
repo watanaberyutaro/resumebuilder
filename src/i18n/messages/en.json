@@ -1,0 +1,57 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "next": "Next",
+    "back": "Back",
+    "submit": "Submit",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "loginTitle": "Login",
+    "registerTitle": "Create Account",
+    "companyRegisterTitle": "Company Registration",
+    "forgotPassword": "Forgot your password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "googleLogin": "Login with Google"
+  },
+  "resume": {
+    "title": "Resume Builder",
+    "basicInfo": "Basic Information",
+    "desiredPosition": "Desired Position",
+    "workHistory": "Work History",
+    "skills": "Skills",
+    "preview": "Preview",
+    "fullName": "Full Name",
+    "fullNameKana": "Full Name (Phonetic)",
+    "birthDate": "Date of Birth",
+    "gender": "Gender",
+    "address": "Address",
+    "phone": "Phone",
+    "aiGenerate": "AI Generate",
+    "downloadPDF": "Download PDF"
+  },
+  "company": {
+    "dashboard": "Dashboard",
+    "candidates": "Find Candidates",
+    "scouts": "Scout Management",
+    "billing": "Billing",
+    "settings": "Settings",
+    "sendScout": "Send Scout",
+    "scoutSent": "Scout sent successfully"
+  },
+  "notification": {
+    "scoutReceived": "You received a new scout",
+    "messageReceived": "You received a new message"
+  }
+}

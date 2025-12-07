@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@14:*)",
+      "Bash(npm install)",
+      "Bash(npx supabase:*)",
+      "Bash(npm run dev:*)",
+      "Bash(cat:*)",
+      "Bash(pbcopy)",
+      "Bash(ls:*)",
+      "Bash(curl:*)",
+      "Bash(chmod:*)",
+      "Bash(pkill:*)",
+      "Bash(unzip:*)",
+      "Bash(npm install:*)",
+      "Bash(lsof:*)",
+      "Bash(wc:*)",
+      "Bash(npx tsc:*)",
+      "Bash(grep:*)",
+      "WebSearch",
+      "WebFetch(domain:docs.bria.ai)",
+      "WebFetch(domain:bria-ai-api-docs.redoc.ly)",
+      "Bash(xargs kill -9)",
+      "Bash(git checkout:*)",
+      "Bash(git status:*)",
+      "Bash(git stash:*)",
+      "Bash(git restore:*)",
+      "Bash(find:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

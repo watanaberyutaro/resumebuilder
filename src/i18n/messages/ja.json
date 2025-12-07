@@ -1,0 +1,57 @@
+{
+  "common": {
+    "loading": "読み込み中...",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "add": "追加",
+    "next": "次へ",
+    "back": "戻る",
+    "submit": "送信",
+    "logout": "ログアウト",
+    "login": "ログイン",
+    "register": "登録"
+  },
+  "auth": {
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "confirmPassword": "パスワード（確認）",
+    "loginTitle": "ログイン",
+    "registerTitle": "新規登録",
+    "companyRegisterTitle": "企業アカウント登録",
+    "forgotPassword": "パスワードをお忘れですか？",
+    "noAccount": "アカウントをお持ちでない方",
+    "hasAccount": "既にアカウントをお持ちの方",
+    "googleLogin": "Googleでログイン"
+  },
+  "resume": {
+    "title": "履歴書作成",
+    "basicInfo": "基本情報",
+    "desiredPosition": "希望職種",
+    "workHistory": "職務経歴",
+    "skills": "スキル",
+    "preview": "プレビュー",
+    "fullName": "氏名",
+    "fullNameKana": "氏名（フリガナ）",
+    "birthDate": "生年月日",
+    "gender": "性別",
+    "address": "住所",
+    "phone": "電話番号",
+    "aiGenerate": "AI生成",
+    "downloadPDF": "PDFダウンロード"
+  },
+  "company": {
+    "dashboard": "ダッシュボード",
+    "candidates": "候補者検索",
+    "scouts": "スカウト管理",
+    "billing": "請求・支払い",
+    "settings": "設定",
+    "sendScout": "スカウトを送信",
+    "scoutSent": "スカウトを送信しました"
+  },
+  "notification": {
+    "scoutReceived": "新しいスカウトが届きました",
+    "messageReceived": "新しいメッセージが届きました"
+  }
+}
