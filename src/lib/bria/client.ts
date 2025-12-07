@@ -22,6 +22,7 @@ interface BriaApiResponse {
   output_url?: string;
   image_url?: string;
   message?: string;
+  error?: string;
 }
 
 export class BriaClient {
