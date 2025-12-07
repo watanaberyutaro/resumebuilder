@@ -167,7 +167,11 @@ export class BriaClient {
       }
 
       // Fallback: check for immediate result (v1 style)
-      const resultUrl = data.result_url || data.result || data.url || data.output_url;
+      const resultUrl =
+        data.result_url ||
+        (typeof data.result === 'string' ? data.result : undefined) ||
+        data.url ||
+        data.output_url;
       if (resultUrl) {
         return { success: true, resultUrl };
       }
