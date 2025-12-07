@@ -22,8 +22,9 @@ export async function GET(request: NextRequest) {
 
     const { searchParams } = new URL(request.url);
     const resumeId = searchParams.get('resumeId');
+    const template = searchParams.get('template') as 'jis' | 'modern' | 'engineer' || 'jis';
 
-    console.log('PDF params:', { resumeId, userId: user.id });
+    console.log('PDF params:', { resumeId, template, userId: user.id });
 
     if (!resumeId) {
       return NextResponse.json({ error: 'resumeIdが必要です' }, { status: 400 });
@@ -74,6 +75,7 @@ export async function GET(request: NextRequest) {
         resume={resume}
         workHistories={workHistories || []}
         skills={skills || []}
+        templateType={template}
       />
     );
 
