@@ -27,7 +27,7 @@ try {
 // Hyphenation callback to prevent word breaking issues with Japanese
 Font.registerHyphenationCallback((word) => [word]);
 
-// Colors matching Tailwind
+// Colors matching Tailwind gray palette
 const colors = {
   gray50: '#f9fafb',
   gray100: '#f3f4f6',
@@ -39,7 +39,7 @@ const colors = {
   gray700: '#374151',
   gray800: '#1f2937',
   gray900: '#111827',
-  blue600: '#2563eb',
+  blue50: '#eff6ff',
   blue700: '#1d4ed8',
   white: '#ffffff',
 };
@@ -48,57 +48,63 @@ const styles = StyleSheet.create({
   page: {
     fontFamily: fontRegistered ? 'IPAexGothic' : 'Helvetica',
     fontSize: 10,
-    padding: 30,
-    backgroundColor: colors.gray50,
-  },
-  // Card matching shadcn/ui Card component
-  card: {
-    marginBottom: 12,
+    padding: 24,
     backgroundColor: colors.white,
-    borderRadius: 8,
-    border: `1 solid ${colors.gray200}`,
   },
-  cardHeader: {
-    padding: 16,
-    paddingBottom: 12,
-  },
-  cardTitle: {
-    fontSize: 13,
-    fontWeight: 600,
-    color: colors.gray900,
-  },
-  cardContent: {
-    paddingHorizontal: 16,
-    paddingBottom: 16,
-  },
-  // Header with photo
-  headerContainer: {
-    flexDirection: 'row',
-    marginBottom: 16,
-  },
-  headerInfo: {
-    flex: 1,
+  // Header - dark background with title
+  header: {
+    backgroundColor: colors.gray800,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    marginBottom: 0,
+    marginHorizontal: -24,
+    marginTop: -24,
   },
   headerTitle: {
-    fontSize: 20,
-    fontWeight: 700,
-    color: colors.gray900,
-    marginBottom: 4,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.white,
     textAlign: 'center',
+    letterSpacing: 4,
   },
-  headerSubtitle: {
-    fontSize: 9,
-    color: colors.gray500,
-    textAlign: 'center',
+  headerDate: {
+    fontSize: 8,
+    color: colors.gray300,
+    textAlign: 'right',
+    marginTop: 4,
   },
-  // Photo container - JIS standard size 30mm x 40mm
-  photoContainer: {
-    width: 85,
-    height: 113,
-    marginLeft: 16,
-    backgroundColor: colors.gray100,
+  // Content container
+  content: {
+    padding: 24,
+    paddingTop: 16,
+  },
+  // Basic info section
+  basicInfoSection: {
+    border: `1 solid ${colors.gray300}`,
     borderRadius: 4,
-    border: `1 solid ${colors.gray200}`,
+    marginBottom: 16,
+    overflow: 'hidden',
+  },
+  basicInfoGrid: {
+    flexDirection: 'row',
+  },
+  // Photo column
+  photoColumn: {
+    width: 80,
+    borderRight: `1 solid ${colors.gray300}`,
+    padding: 8,
+    backgroundColor: colors.gray50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: 120,
+  },
+  photoBox: {
+    width: 60,
+    height: 84,
+    border: `1 dashed ${colors.gray300}`,
+    borderRadius: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
     overflow: 'hidden',
   },
   photo: {
@@ -107,98 +113,243 @@ const styles = StyleSheet.create({
     objectFit: 'cover',
   },
   photoPlaceholder: {
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  photoPlaceholderText: {
-    fontSize: 8,
+    fontSize: 7,
     color: colors.gray400,
     textAlign: 'center',
   },
-  // Grid layout for basic info (2 columns)
-  gridContainer: {
+  // Info column
+  infoColumn: {
+    flex: 1,
+  },
+  // Name row
+  nameRow: {
+    borderBottom: `1 solid ${colors.gray300}`,
+  },
+  furiganaRow: {
+    backgroundColor: colors.gray50,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderBottom: `1 solid ${colors.gray200}`,
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    alignItems: 'center',
   },
-  gridItem: {
-    width: '50%',
-    marginBottom: 8,
-  },
-  gridItemFull: {
-    width: '100%',
-    marginBottom: 8,
-  },
-  label: {
-    fontSize: 9,
+  furiganaLabel: {
+    fontSize: 8,
     color: colors.gray500,
-    marginBottom: 2,
   },
-  value: {
-    fontSize: 10,
-    color: colors.gray900,
-  },
-  // Work history items
-  workItem: {
-    marginBottom: 10,
-    paddingBottom: 10,
-    borderBottom: `1 solid ${colors.gray100}`,
-  },
-  workItemLast: {
-    marginBottom: 0,
-    paddingBottom: 0,
-  },
-  companyName: {
-    fontSize: 11,
-    fontWeight: 500,
-    color: colors.gray900,
-    marginBottom: 2,
-  },
-  positionPeriod: {
-    fontSize: 9,
-    color: colors.gray500,
-    marginBottom: 4,
-  },
-  description: {
+  furiganaValue: {
     fontSize: 9,
     color: colors.gray700,
-    lineHeight: 1.5,
-    marginTop: 4,
+    marginLeft: 8,
   },
-  achievements: {
+  nameMainRow: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  nameLabel: {
+    fontSize: 8,
+    color: colors.gray500,
+  },
+  nameValue: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: colors.gray900,
+    marginLeft: 8,
+  },
+  // Birth date & age row
+  birthAgeRow: {
+    borderBottom: `1 solid ${colors.gray300}`,
+    flexDirection: 'row',
+  },
+  birthDateCell: {
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRight: `1 solid ${colors.gray300}`,
+  },
+  ageCell: {
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  cellLabel: {
+    fontSize: 8,
+    color: colors.gray500,
+    marginBottom: 2,
+  },
+  cellValue: {
     fontSize: 9,
-    color: colors.blue700,
-    lineHeight: 1.5,
+    color: colors.gray900,
+  },
+  // Address row
+  addressRow: {
+    borderBottom: `1 solid ${colors.gray300}`,
+  },
+  postalRow: {
+    backgroundColor: colors.gray50,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderBottom: `1 solid ${colors.gray200}`,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  postalLabel: {
+    fontSize: 8,
+    color: colors.gray500,
+  },
+  postalValue: {
+    fontSize: 9,
+    color: colors.gray900,
+    marginLeft: 4,
+  },
+  addressMainRow: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  // Contact row
+  contactRow: {
+    flexDirection: 'row',
+  },
+  contactCell: {
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  contactCellBorder: {
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRight: `1 solid ${colors.gray300}`,
+  },
+  // Section with header
+  section: {
+    border: `1 solid ${colors.gray300}`,
+    borderRadius: 4,
+    marginBottom: 16,
+    overflow: 'hidden',
+  },
+  sectionHeader: {
+    backgroundColor: colors.gray800,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  sectionTitle: {
+    fontSize: 10,
+    fontWeight: 'medium',
+    color: colors.white,
+  },
+  // Education/Work history table
+  historySubHeader: {
+    backgroundColor: colors.gray100,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderBottom: `1 solid ${colors.gray200}`,
+  },
+  historySubTitle: {
+    fontSize: 8,
+    fontWeight: 'medium',
+    color: colors.gray600,
+    textAlign: 'center',
+  },
+  historyRow: {
+    flexDirection: 'row',
+    borderBottom: `1 solid ${colors.gray200}`,
+  },
+  historyDateCell: {
+    width: 70,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderRight: `1 solid ${colors.gray200}`,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  historyDateText: {
+    fontSize: 9,
+    color: colors.gray600,
+    textAlign: 'center',
+  },
+  historyContentCell: {
+    flex: 1,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+  },
+  historyContentText: {
+    fontSize: 9,
+    color: colors.gray900,
+  },
+  historyContentBold: {
+    fontSize: 9,
+    fontWeight: 'medium',
+    color: colors.gray900,
+  },
+  historyDescription: {
+    fontSize: 8,
+    color: colors.gray600,
     marginTop: 2,
   },
-  // Skills
+  historyFooter: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderTop: `1 solid ${colors.gray200}`,
+  },
+  historyFooterText: {
+    fontSize: 9,
+    color: colors.gray600,
+    textAlign: 'right',
+  },
+  // Empty state
+  emptyState: {
+    paddingVertical: 20,
+    alignItems: 'center',
+  },
+  emptyText: {
+    fontSize: 9,
+    color: colors.gray400,
+  },
+  // Certification list
+  certificationItem: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderBottom: `1 solid ${colors.gray200}`,
+  },
+  certificationText: {
+    fontSize: 9,
+    color: colors.gray900,
+  },
+  // Skills badges
+  skillsContainer: {
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
   skillsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+  skillBadge: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    backgroundColor: colors.blue50,
+    borderRadius: 10,
+    marginRight: 6,
     marginBottom: 6,
   },
-  skillLabel: {
+  skillBadgeText: {
     fontSize: 9,
-    color: colors.gray500,
+    color: colors.blue700,
   },
-  skillValue: {
-    fontSize: 10,
+  // PR section
+  prContent: {
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    minHeight: 80,
+  },
+  prText: {
+    fontSize: 9,
     color: colors.gray900,
-    marginLeft: 6,
-  },
-  // Section text
-  sectionText: {
-    fontSize: 10,
-    color: colors.gray700,
     lineHeight: 1.6,
-  },
-  // Education items
-  educationRow: {
-    marginBottom: 4,
-  },
-  educationText: {
-    fontSize: 10,
-    color: colors.gray900,
-    marginLeft: 6,
   },
 });
 
@@ -209,233 +360,305 @@ interface ResumeDocumentProps {
   templateType: 'jis' | 'modern' | 'engineer';
 }
 
+// Helper function to format date as "YYYY年M月"
+function formatJapaneseDate(dateStr: string | null): string {
+  if (!dateStr) return '';
+  try {
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    return `${year}年${month}月`;
+  } catch {
+    return dateStr;
+  }
+}
+
+// Helper function to format full date as "YYYY年M月D日"
+function formatFullDate(dateStr: string | null): string {
+  if (!dateStr) return '';
+  try {
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}年${month}月${day}日`;
+  } catch {
+    return dateStr;
+  }
+}
+
+// Helper function to calculate age
+function calculateAge(birthDate: string | null): number | null {
+  if (!birthDate) return null;
+  const today = new Date();
+  const birth = new Date(birthDate);
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+    age--;
+  }
+  return age;
+}
+
 export function ResumeDocument({ resume, workHistories, skills }: ResumeDocumentProps) {
-  const formatDateShort = (date: string | null) => {
-    if (!date) return '';
-    return date.substring(0, 7).replace('-', '/');
-  };
-
-  const calculateAge = (birthDate: string | null) => {
-    if (!birthDate) return null;
-    const today = new Date();
-    const birth = new Date(birthDate);
-    let age = today.getFullYear() - birth.getFullYear();
-    const m = today.getMonth() - birth.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
-      age--;
-    }
-    return age;
-  };
-
-  const hardSkills = skills.filter(s => s.skill_type === 'hard');
-  const softSkills = skills.filter(s => s.skill_type === 'soft');
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日現在`;
   const age = calculateAge(resume.birth_date);
   const photoUrl = resume.photo_processed_url || resume.photo_url;
+
+  // Parse education from JSONB
+  const education = Array.isArray(resume.education) ? resume.education : [];
+  const certifications = resume.certifications || [];
+  const skillNames = skills.map(s => s.skill_name);
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Header with Title and Photo */}
-        <View style={styles.headerContainer}>
-          <View style={styles.headerInfo}>
-            <Text style={styles.headerTitle}>履歴書</Text>
-            <Text style={styles.headerSubtitle}>
-              作成日：{new Date().toLocaleDateString('ja-JP')}
-            </Text>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>履 歴 書</Text>
+          <Text style={styles.headerDate}>{todayStr}</Text>
+        </View>
+
+        <View style={styles.content}>
+          {/* Basic Information */}
+          <View style={styles.basicInfoSection}>
+            <View style={styles.basicInfoGrid}>
+              {/* Photo */}
+              <View style={styles.photoColumn}>
+                <View style={styles.photoBox}>
+                  {photoUrl ? (
+                    // eslint-disable-next-line jsx-a11y/alt-text
+                    <Image src={photoUrl} style={styles.photo} />
+                  ) : (
+                    <Text style={styles.photoPlaceholder}>写真{'\n'}3×4cm</Text>
+                  )}
+                </View>
+              </View>
+
+              {/* Info */}
+              <View style={styles.infoColumn}>
+                {/* Name */}
+                <View style={styles.nameRow}>
+                  <View style={styles.furiganaRow}>
+                    <Text style={styles.furiganaLabel}>ふりがな</Text>
+                    <Text style={styles.furiganaValue}>{resume.full_name_kana || '-'}</Text>
+                  </View>
+                  <View style={styles.nameMainRow}>
+                    <Text style={styles.nameLabel}>氏名</Text>
+                    <Text style={styles.nameValue}>{resume.full_name || '未入力'}</Text>
+                  </View>
+                </View>
+
+                {/* Birth date & Age */}
+                <View style={styles.birthAgeRow}>
+                  <View style={styles.birthDateCell}>
+                    <Text style={styles.cellLabel}>生年月日</Text>
+                    <Text style={styles.cellValue}>
+                      {resume.birth_date ? formatFullDate(resume.birth_date) : '-'}
+                    </Text>
+                  </View>
+                  <View style={styles.ageCell}>
+                    <Text style={styles.cellLabel}>年齢</Text>
+                    <Text style={styles.cellValue}>{age !== null ? `満${age}歳` : '-'}</Text>
+                  </View>
+                </View>
+
+                {/* Address */}
+                <View style={styles.addressRow}>
+                  <View style={styles.postalRow}>
+                    <Text style={styles.postalLabel}>〒</Text>
+                    <Text style={styles.postalValue}>{resume.postal_code || '-'}</Text>
+                  </View>
+                  <View style={styles.addressMainRow}>
+                    <Text style={styles.cellLabel}>現住所</Text>
+                    <Text style={styles.cellValue}>{resume.address || '未入力'}</Text>
+                  </View>
+                </View>
+
+                {/* Contact */}
+                <View style={styles.contactRow}>
+                  <View style={styles.contactCellBorder}>
+                    <Text style={styles.cellLabel}>電話番号</Text>
+                    <Text style={styles.cellValue}>{resume.phone || '-'}</Text>
+                  </View>
+                  <View style={styles.contactCell}>
+                    <Text style={styles.cellLabel}>メールアドレス</Text>
+                    <Text style={styles.cellValue}>{resume.email || '-'}</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
           </View>
-          <View style={styles.photoContainer}>
-            {photoUrl ? (
-              // eslint-disable-next-line jsx-a11y/alt-text
-              <Image src={photoUrl} style={styles.photo} />
+
+          {/* Education & Work History */}
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>学歴・職歴</Text>
+            </View>
+
+            {/* Education */}
+            <View style={styles.historySubHeader}>
+              <Text style={styles.historySubTitle}>学歴</Text>
+            </View>
+            {education.length > 0 ? (
+              education.map((edu: { school_name?: string; faculty?: string; start_date?: string; end_date?: string }, index: number) => (
+                <React.Fragment key={`edu-${index}`}>
+                  <View style={styles.historyRow}>
+                    <View style={styles.historyDateCell}>
+                      <Text style={styles.historyDateText}>
+                        {formatJapaneseDate(edu.start_date || null)}
+                      </Text>
+                    </View>
+                    <View style={styles.historyContentCell}>
+                      <Text style={styles.historyContentText}>
+                        {edu.school_name || ''} {edu.faculty || ''} 入学
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={styles.historyRow}>
+                    <View style={styles.historyDateCell}>
+                      <Text style={styles.historyDateText}>
+                        {formatJapaneseDate(edu.end_date || null)}
+                      </Text>
+                    </View>
+                    <View style={styles.historyContentCell}>
+                      <Text style={styles.historyContentText}>
+                        {edu.school_name || ''} {edu.faculty || ''} 卒業
+                      </Text>
+                    </View>
+                  </View>
+                </React.Fragment>
+              ))
             ) : (
-              <View style={styles.photoPlaceholder}>
-                <Text style={styles.photoPlaceholderText}>証明写真</Text>
+              <View style={styles.emptyState}>
+                <Text style={styles.emptyText}>学歴を入力してください</Text>
+              </View>
+            )}
+
+            {/* Work History */}
+            <View style={styles.historySubHeader}>
+              <Text style={styles.historySubTitle}>職歴</Text>
+            </View>
+            {workHistories.length > 0 ? (
+              <>
+                {workHistories.map((work, index) => (
+                  <React.Fragment key={`work-${index}`}>
+                    <View style={styles.historyRow}>
+                      <View style={styles.historyDateCell}>
+                        <Text style={styles.historyDateText}>
+                          {formatJapaneseDate(work.start_date)}
+                        </Text>
+                      </View>
+                      <View style={styles.historyContentCell}>
+                        <Text style={styles.historyContentBold}>
+                          {work.company_name} 入社
+                          {work.department && ` (${work.department})`}
+                        </Text>
+                        {work.description && (
+                          <Text style={styles.historyDescription}>
+                            {work.position && `${work.position}として `}
+                            {work.description}
+                          </Text>
+                        )}
+                      </View>
+                    </View>
+                    {work.is_current ? (
+                      <View style={styles.historyRow}>
+                        <View style={styles.historyDateCell}>
+                          <Text style={styles.historyDateText}></Text>
+                        </View>
+                        <View style={styles.historyContentCell}>
+                          <Text style={styles.historyContentText}>現在に至る</Text>
+                        </View>
+                      </View>
+                    ) : work.end_date && (
+                      <View style={styles.historyRow}>
+                        <View style={styles.historyDateCell}>
+                          <Text style={styles.historyDateText}>
+                            {formatJapaneseDate(work.end_date)}
+                          </Text>
+                        </View>
+                        <View style={styles.historyContentCell}>
+                          <Text style={styles.historyContentText}>一身上の都合により退職</Text>
+                        </View>
+                      </View>
+                    )}
+                  </React.Fragment>
+                ))}
+                <View style={styles.historyFooter}>
+                  <Text style={styles.historyFooterText}>以上</Text>
+                </View>
+              </>
+            ) : (
+              <View style={styles.emptyState}>
+                <Text style={styles.emptyText}>職歴を入力してください</Text>
               </View>
             )}
           </View>
-        </View>
 
-        {/* Basic Information Card */}
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>基本情報</Text>
-          </View>
-          <View style={styles.cardContent}>
-            <View style={styles.gridContainer}>
-              <View style={styles.gridItem}>
-                <Text style={styles.label}>氏名：</Text>
-                <Text style={styles.value}>
-                  {resume.full_name || '-'} {resume.full_name_kana && `（${resume.full_name_kana}）`}
-                </Text>
-              </View>
-              <View style={styles.gridItem}>
-                <Text style={styles.label}>年齢：</Text>
-                <Text style={styles.value}>{age ? `${age}歳` : '-'}</Text>
-              </View>
-              <View style={styles.gridItem}>
-                <Text style={styles.label}>住所：</Text>
-                <Text style={styles.value}>{resume.address || '-'}</Text>
-              </View>
-              <View style={styles.gridItem}>
-                <Text style={styles.label}>電話：</Text>
-                <Text style={styles.value}>{resume.phone || '-'}</Text>
-              </View>
-              <View style={styles.gridItemFull}>
-                <Text style={styles.label}>メール：</Text>
-                <Text style={styles.value}>{resume.email || '-'}</Text>
-              </View>
+          {/* Certifications */}
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>免許・資格</Text>
             </View>
-          </View>
-        </View>
-
-        {/* Career Summary Card */}
-        {resume.ai_summary && (
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>職務要約</Text>
-            </View>
-            <View style={styles.cardContent}>
-              <Text style={styles.sectionText}>{resume.ai_summary}</Text>
-            </View>
-          </View>
-        )}
-
-        {/* Work History Card */}
-        {workHistories.length > 0 && (
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>職務経歴</Text>
-            </View>
-            <View style={styles.cardContent}>
-              {workHistories.map((wh, index) => (
-                <View
-                  key={index}
-                  style={
-                    index === workHistories.length - 1
-                      ? [styles.workItem, styles.workItemLast]
-                      : styles.workItem
-                  }
-                >
-                  <Text style={styles.companyName}>{wh.company_name}</Text>
-                  <Text style={styles.positionPeriod}>
-                    {wh.position && `${wh.position} / `}
-                    {formatDateShort(wh.start_date)} 〜 {wh.is_current ? '現在' : formatDateShort(wh.end_date)}
-                  </Text>
-                  {(wh.ai_description || wh.description) && (
-                    <Text style={styles.description}>
-                      {wh.ai_description || wh.description}
-                    </Text>
-                  )}
-                  {(wh.ai_achievements || wh.achievements) && (
-                    <Text style={styles.achievements}>
-                      【実績】{wh.ai_achievements || wh.achievements}
-                    </Text>
-                  )}
+            {certifications.length > 0 ? (
+              certifications.map((cert, index) => (
+                <View key={index} style={styles.certificationItem}>
+                  <Text style={styles.certificationText}>{cert}</Text>
                 </View>
-              ))}
-            </View>
+              ))
+            ) : (
+              <View style={styles.emptyState}>
+                <Text style={styles.emptyText}>資格・免許を入力してください</Text>
+              </View>
+            )}
           </View>
-        )}
 
-        {/* Skills Card */}
-        {skills.length > 0 && (
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>スキル</Text>
-            </View>
-            <View style={styles.cardContent}>
-              {hardSkills.length > 0 && (
+          {/* Skills */}
+          {skillNames.length > 0 && (
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionTitle}>スキル</Text>
+              </View>
+              <View style={styles.skillsContainer}>
                 <View style={styles.skillsRow}>
-                  <Text style={styles.skillLabel}>
-                    技術スキル：
-                    <Text style={styles.skillValue}>
-                      {hardSkills.map(s => s.skill_name).join(', ')}
-                    </Text>
-                  </Text>
-                </View>
-              )}
-              {softSkills.length > 0 && (
-                <View style={styles.skillsRow}>
-                  <Text style={styles.skillLabel}>
-                    ソフトスキル：
-                    <Text style={styles.skillValue}>
-                      {softSkills.map(s => s.skill_name).join(', ')}
-                    </Text>
-                  </Text>
-                </View>
-              )}
-            </View>
-          </View>
-        )}
-
-        {/* Self PR Card */}
-        {resume.ai_self_pr && (
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>自己PR</Text>
-            </View>
-            <View style={styles.cardContent}>
-              <Text style={styles.sectionText}>{resume.ai_self_pr}</Text>
-            </View>
-          </View>
-        )}
-
-        {/* Career Objective Card */}
-        {resume.ai_career_objective && (
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>志望動機</Text>
-            </View>
-            <View style={styles.cardContent}>
-              <Text style={styles.sectionText}>{resume.ai_career_objective}</Text>
-            </View>
-          </View>
-        )}
-
-        {/* Education & Certifications Card */}
-        {((resume.education && Array.isArray(resume.education) && resume.education.length > 0) ||
-          (resume.certifications && resume.certifications.length > 0) ||
-          (resume.languages && resume.languages.length > 0)) && (
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>学歴・資格・語学</Text>
-            </View>
-            <View style={styles.cardContent}>
-              {resume.education && Array.isArray(resume.education) && resume.education.length > 0 && (
-                <View style={styles.skillsRow}>
-                  <Text style={styles.skillLabel}>学歴：</Text>
-                  {resume.education.map((edu, index) => (
-                    <View key={index} style={styles.educationRow}>
-                      <Text style={styles.educationText}>
-                        {edu.school_name || ''} {edu.faculty ? edu.faculty : ''} {edu.degree || ''}
-                      </Text>
+                  {skillNames.map((skill, index) => (
+                    <View key={index} style={styles.skillBadge}>
+                      <Text style={styles.skillBadgeText}>{skill}</Text>
                     </View>
                   ))}
                 </View>
-              )}
-              {resume.certifications && resume.certifications.length > 0 && (
-                <View style={styles.skillsRow}>
-                  <Text style={styles.skillLabel}>
-                    資格：
-                    <Text style={styles.skillValue}>
-                      {resume.certifications.join(', ')}
-                    </Text>
-                  </Text>
-                </View>
-              )}
-              {resume.languages && resume.languages.length > 0 && (
-                <View style={styles.skillsRow}>
-                  <Text style={styles.skillLabel}>
-                    語学：
-                    <Text style={styles.skillValue}>
-                      {resume.languages.map(l => `${l.language}(${l.level})`).join(', ')}
-                    </Text>
-                  </Text>
-                </View>
+              </View>
+            </View>
+          )}
+
+          {/* Self PR */}
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>自己PR</Text>
+            </View>
+            <View style={styles.prContent}>
+              {resume.ai_self_pr ? (
+                <Text style={styles.prText}>{resume.ai_self_pr}</Text>
+              ) : (
+                <Text style={styles.emptyText}>自己PRを入力してください</Text>
               )}
             </View>
           </View>
-        )}
+
+          {/* Career Objective */}
+          {resume.ai_career_objective && (
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionTitle}>志望動機</Text>
+              </View>
+              <View style={styles.prContent}>
+                <Text style={styles.prText}>{resume.ai_career_objective}</Text>
+              </View>
+            </View>
+          )}
+        </View>
       </Page>
     </Document>
   );
