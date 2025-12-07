@@ -190,10 +190,10 @@ export function convertToResumeInput(imported: ImportedProfile): Partial<Resume>
     ai_summary: imported.summary,
     education: imported.education.map((edu) => ({
       school_name: edu.schoolName,
-      degree: edu.degree,
-      faculty: edu.fieldOfStudy,
-      start_date: edu.startDate,
-      end_date: edu.endDate,
+      degree: edu.degree || null,
+      faculty: edu.fieldOfStudy || null,
+      start_date: edu.startDate || null,
+      end_date: edu.endDate || null,
       is_current: false,
     })),
   };
