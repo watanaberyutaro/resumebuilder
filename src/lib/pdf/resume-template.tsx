@@ -312,7 +312,7 @@ export function ResumeDocument({ resume, workHistories, skills }: ResumeDocument
                   key={index}
                   style={[
                     styles.workItem,
-                    index === workHistories.length - 1 ? styles.workItemLast : null
+                    index === workHistories.length - 1 ? styles.workItemLast : undefined
                   ]}
                 >
                   <Text style={styles.companyName}>{wh.company_name}</Text>
