@@ -121,7 +121,7 @@ export async function GET(request: NextRequest) {
     const fileName = resume.full_name || 'resume';
     const encodedFileName = encodeURIComponent(fileName);
 
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(Buffer.from(pdfBuffer), {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="resume.pdf"; filename*=UTF-8''${encodedFileName}.pdf`,
