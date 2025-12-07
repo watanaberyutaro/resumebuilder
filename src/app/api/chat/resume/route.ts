@@ -190,15 +190,11 @@ async function saveExtractedData(
     console.log('saveExtractedData called with:', JSON.stringify(extractedData, null, 2));
 
     // Get or create resume
-    const { data: resume, error: resumeError } = await supabase
+    let { data: resume } = await supabase
       .from('resumes')
       .select('id')
       .eq('user_id', userId)
       .single();
-
-    if (resumeError) {
-      console.log('Resume fetch error (may be expected if no resume exists):', resumeError.message);
-    }
 
     if (!resume) {
       const { data: newResume, error: createError } = await supabase
