@@ -70,11 +70,11 @@ export async function GET(request: NextRequest) {
     // Generate PDF using @react-pdf/renderer
     console.log('Generating PDF with @react-pdf/renderer...');
     const pdfBuffer = await renderToBuffer(
-      React.createElement(ResumeDocument, {
-        resume,
-        workHistories: workHistories || [],
-        skills: skills || [],
-      })
+      <ResumeDocument
+        resume={resume}
+        workHistories={workHistories || []}
+        skills={skills || []}
+      />
     );
 
     console.log('PDF generated, size:', pdfBuffer.length);
