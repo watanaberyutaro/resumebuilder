@@ -517,7 +517,8 @@ export async function POST(request: NextRequest) {
 }
 
 // Fallback responses when no OpenAI API key is set
-function createFallbackResponse(message: string, currentStep: Step, _resumeData: Record<string, unknown>) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function createFallbackResponse(message: string, currentStep: Step, resumeData: Record<string, unknown>) {
   // Check for skip keywords
   const skipKeywords = ['次へ', '次に', 'next', 'なし', 'ない', '特にない', 'skip'];
   const shouldSkip = skipKeywords.some(kw => message.toLowerCase().includes(kw.toLowerCase()));
