@@ -7,13 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Plus, X } from 'lucide-react';
 
-type SkillForm = {
-  skill_name: string;
-  skill_type: 'hard' | 'soft';
-  proficiency_level: number | null;
-  years_of_experience: number | null;
-};
-
 const COMMON_HARD_SKILLS = [
   'JavaScript', 'TypeScript', 'React', 'Vue.js', 'Node.js',
   'Python', 'Java', 'Go', 'AWS', 'Docker',

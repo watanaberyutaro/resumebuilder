@@ -83,13 +83,13 @@ export async function importProfile(url: string): Promise<ImportResult> {
 }
 
 // LinkedIn import (placeholder)
-async function importFromLinkedIn(_url: string): Promise<ImportResult> {
+async function importFromLinkedIn(url: string): Promise<ImportResult> {
   // In production, this would:
   // 1. Use LinkedIn API (requires OAuth and LinkedIn Developer approval)
   // 2. Or use a scraping service (careful with ToS)
 
   // Returning dummy data for demonstration
-  console.log('LinkedIn import: Using placeholder data');
+  console.log('LinkedIn import: Using placeholder data for URL:', url);
 
   return {
     success: true,
@@ -130,8 +130,8 @@ async function importFromLinkedIn(_url: string): Promise<ImportResult> {
 }
 
 // Wantedly import (placeholder)
-async function importFromWantedly(_url: string): Promise<ImportResult> {
-  console.log('Wantedly import: Using placeholder data');
+async function importFromWantedly(url: string): Promise<ImportResult> {
+  console.log('Wantedly import: Using placeholder data for URL:', url);
 
   return {
     success: true,
@@ -164,8 +164,8 @@ async function importFromWantedly(_url: string): Promise<ImportResult> {
 }
 
 // Facebook import (placeholder)
-async function importFromFacebook(_url: string): Promise<ImportResult> {
-  console.log('Facebook import: Using placeholder data');
+async function importFromFacebook(url: string): Promise<ImportResult> {
+  console.log('Facebook import: Using placeholder data for URL:', url);
 
   // Facebook Graph API would be needed for real implementation
   return {

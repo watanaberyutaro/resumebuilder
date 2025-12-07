@@ -5,8 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Send, Download, Loader2, ArrowLeft, FileText, Edit, RotateCcw, PlayCircle, CheckCircle } from 'lucide-react';
+import { Send, Download, Loader2, ArrowLeft, FileText, Edit, RotateCcw, CheckCircle } from 'lucide-react';
 import { ResumePreview } from '@/components/resume/resume-preview';
 import { toast } from '@/components/ui/toast';
 

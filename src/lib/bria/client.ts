@@ -4,10 +4,25 @@
 // https://docs.bria.ai/image-editing/v2-endpoints/background-remove
 // =====================================================
 
-import type { BriaConfig, BriaRemoveBackgroundResponse, BriaError } from './types';
+import type { BriaConfig, BriaError } from './types';
 
 const DEFAULT_BASE_URL = 'https://engine.prod.bria-api.com/v2';
 const DEFAULT_TIMEOUT = 60000; // 60 seconds
+
+interface BriaApiResponse {
+  status?: string;
+  status_url?: string;
+  request_id?: string;
+  result?: {
+    image_url?: string;
+    url?: string;
+  } | string;
+  result_url?: string;
+  url?: string;
+  output_url?: string;
+  image_url?: string;
+  message?: string;
+}
 
 export class BriaClient {
   private apiKey: string;
@@ -41,7 +56,7 @@ export class BriaClient {
           return { success: false, error: `Status check failed: ${response.status}` };
         }
 
-        const data = await response.json() as any;
+        const data = await response.json() as BriaApiResponse;
         console.log(`Bria status check (attempt ${attempt + 1}):`, data);
 
         // Check if complete (case-insensitive)
@@ -141,7 +156,7 @@ export class BriaClient {
         return { success: false, error: errorMessage };
       }
 
-      const data = await response.json() as any;
+      const data = await response.json() as BriaApiResponse;
       console.log('Bria API response:', JSON.stringify(data, null, 2));
 
       // V2 API returns request_id and status_url for async processing

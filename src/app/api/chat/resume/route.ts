@@ -190,7 +190,7 @@ async function saveExtractedData(
     console.log('saveExtractedData called with:', JSON.stringify(extractedData, null, 2));
 
     // Get or create resume
-    let { data: resume, error: resumeError } = await supabase
+    const { data: resume, error: resumeError } = await supabase
       .from('resumes')
       .select('id')
       .eq('user_id', userId)
@@ -521,7 +521,7 @@ export async function POST(request: NextRequest) {
 }
 
 // Fallback responses when no OpenAI API key is set
-function createFallbackResponse(message: string, currentStep: Step, resumeData: Record<string, unknown>) {
+function createFallbackResponse(message: string, currentStep: Step, _resumeData: Record<string, unknown>) {
   // Check for skip keywords
   const skipKeywords = ['次へ', '次に', 'next', 'なし', 'ない', '特にない', 'skip'];
   const shouldSkip = skipKeywords.some(kw => message.toLowerCase().includes(kw.toLowerCase()));

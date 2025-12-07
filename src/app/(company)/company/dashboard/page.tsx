@@ -150,7 +150,6 @@ export default async function CompanyDashboardPage() {
             <div className="space-y-4">
               {recentOffers.map((offer) => {
                 const status = getStatusLabel(offer.status);
-                const profile = offer.profiles as { display_name: string } | null;
                 return (
                   <div
                     key={offer.id}

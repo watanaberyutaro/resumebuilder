@@ -129,35 +129,35 @@ interface StripeCustomer {
   email: string;
 }
 
-export async function createOrGetStripeCustomer(_companyId: string): Promise<StripeCustomer | null> {
+export async function createOrGetStripeCustomer(companyId: string): Promise<StripeCustomer | null> {
   // Placeholder - In production:
   // 1. Check if company has a Stripe customer ID stored
   // 2. If not, create a new Stripe customer
   // 3. Store the customer ID in the database
-  console.log('Stripe integration placeholder: createOrGetStripeCustomer');
+  console.log('Stripe integration placeholder: createOrGetStripeCustomer for company:', companyId);
   return null;
 }
 
 export async function createStripeInvoice(
-  _companyId: string,
-  _amount: number
+  companyId: string,
+  amount: number
 ): Promise<string | null> {
   // Placeholder - In production:
   // 1. Create a Stripe invoice with line items
   // 2. Send the invoice to the customer
   // 3. Return the invoice ID
-  console.log('Stripe integration placeholder: createStripeInvoice');
+  console.log('Stripe integration placeholder: createStripeInvoice for company:', companyId, 'amount:', amount);
   return null;
 }
 
 export async function handleStripeWebhook(
-  _eventType: string,
-  _eventData: Record<string, unknown>
+  eventType: string,
+  eventData: Record<string, unknown>
 ): Promise<void> {
   // Placeholder - In production:
   // Handle Stripe webhook events like:
   // - invoice.paid
   // - invoice.payment_failed
   // - customer.subscription.updated
-  console.log('Stripe integration placeholder: handleStripeWebhook');
+  console.log('Stripe integration placeholder: handleStripeWebhook', eventType, eventData);
 }

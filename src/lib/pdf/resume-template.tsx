@@ -245,6 +245,7 @@ export function ResumeDocument({ resume, workHistories, skills }: ResumeDocument
           </View>
           <View style={styles.photoContainer}>
             {photoUrl ? (
+              // eslint-disable-next-line jsx-a11y/alt-text
               <Image src={photoUrl} style={styles.photo} />
             ) : (
               <View style={styles.photoPlaceholder}>

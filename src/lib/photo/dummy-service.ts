@@ -190,10 +190,10 @@ export class DummyPhotoEditService implements IPhotoEditService {
     }
   }
 
-  async addSuitOverlay(imageBuffer: Buffer, _suitType: string): Promise<PhotoProcessingResult> {
+  async addSuitOverlay(imageBuffer: Buffer, suitType: string): Promise<PhotoProcessingResult> {
     // Dummy implementation: Just return the original image
     // In production, this should use AI-powered virtual try-on
-    console.warn('DummyPhotoEditService.addSuitOverlay: Using placeholder implementation');
+    console.warn('DummyPhotoEditService.addSuitOverlay: Using placeholder implementation for suit type:', suitType);
 
     const startTime = Date.now();
 
